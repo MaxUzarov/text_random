@@ -1,4 +1,9 @@
-var req;
+let req;
+let randomText;
+
+const refs = {
+  random: document.querySelector("#random-text-uzarov")
+};
 
 function load_text(url) {
   if (window.XMLHttpRequest) {
@@ -13,7 +18,7 @@ function load_text(url) {
     req.open("GET", url, true);
     req.send("");
   } else {
-    alert("Can't load file");
+    console.log("Can't load file");
   }
 }
 
@@ -22,7 +27,7 @@ function loadDone() {
     if (req.status == 200) {
       alertRndText(req.responseText);
     } else {
-      alert("error:\n" + req.status + "\n" + req.statusText);
+      console.log("error:\n" + req.status + "\n" + req.statusText);
     }
   }
 }
@@ -33,13 +38,11 @@ function rndNum(min, max) {
 }
 
 function alertRndText(data) {
-  console.log("data", data);
   let arrText = [];
   arrText = data.split("\n");
-
   const rnd = rndNum(1, arrText.length - 1);
-  console.log("data", rnd);
-  alert(arrText[rnd - 1]);
+  randomText = arrText[rnd - 1];
+  refs.random.textContent = randomText;
 }
 
 load_text("https://maxuzarov.github.io/text_random/data/text.txt");
